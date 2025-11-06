@@ -560,7 +560,7 @@ export default function ProposalPage() {
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
               <div>
                 <div className="text-base font-medium">Two99 · Product Engineering & AI</div>
-                <div className="text-slate-500 text-xs">hello@two99.org</div>
+                <a href="mailto:hello@two99.org" className="text-slate-500 text-xs hover:text-slate-700 hover:underline">hello@two99.org</a>
               </div>
               <div className="text-xs text-slate-500">© {new Date().getFullYear()} Two99. All rights reserved.</div>
             </div>
