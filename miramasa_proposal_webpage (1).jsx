@@ -65,13 +65,13 @@ export default function ProposalPage() {
   return (
     <div ref={printRef} className="min-h-screen bg-white text-slate-900">
       <style>{`
-        @page { size: A4; margin: 16mm; }
+        @page { margin: 0; }
         @media print {
           * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           .print\:hidden { display: none !important; }
           .shadow, .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl { box-shadow: none !important; }
           .border { border-color: #ddd !important; }
-          section, .rounded-2xl { break-inside: avoid; page-break-inside: avoid; }
+          section, .rounded-2xl { break-inside: auto; page-break-inside: auto; }
           .page-break-before { break-before: page; page-break-before: always; }
           body { font-size: 12.5px; }
         }
@@ -80,7 +80,7 @@ export default function ProposalPage() {
       <header className="mx-auto max-w-6xl px-6 pt-12 pb-8">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">Proposal · Miramasa Mobile App v1.0</h1>
+            <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">Proposal · Miramasa Mobile App</h1>
             <p className="mt-3 text-slate-600 max-w-2xl">Building a modern, personalized food experience that blends Ayurveda-inspired nutrition with delightful product design and robust integrations.</p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Badge className="rounded-2xl px-3 py-1">iOS & Android</Badge>
@@ -93,7 +93,7 @@ export default function ProposalPage() {
           </div>
           <div className="flex flex-col gap-3 shrink-0 print:hidden">
             <Button onClick={handlePrint} className="rounded-2xl h-11 px-5">Download PDF <Download className="ml-2 h-4 w-4"/></Button>
-            <Button variant="secondary" className="rounded-2xl h-11 px-5">Share <Mail className="ml-2 h-4 w-4"/></Button>
+            
           </div>
         </div>
       </header>
@@ -505,20 +505,73 @@ export default function ProposalPage() {
               <li>Approve brand kit & wireframes; green‑light engineering.</li>
               <li>Kickoff sprint 0 and environment setup.</li>
             </ol>
-            <div className="mt-5 flex flex-wrap gap-3">
-              <Button className="rounded-2xl h-11 px-5">Approve & Kickoff</Button>
-              <Button variant="secondary" className="rounded-2xl h-11 px-5">Request Edits</Button>
-            </div>
+            
           </CardContent>
         </Card>
       </section>
 
       
 
+      {/* Why Two99 */}
+      <section className="mx-auto max-w-6xl px-6 pb-8">
+        <Card className="rounded-2xl">
+          <CardHeader>
+            <CardTitle className="text-2xl">Why Two99</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-slate-700">
+            <div className="grid md:grid-cols-3 gap-6">
+              <div>
+                <h4 className="font-medium">Product + Engineering Depth</h4>
+                <ul className="list-disc ml-5 space-y-1 mt-1">
+                  <li>Native & cross‑platform apps with robust backends</li>
+                  <li>Toast, HealthKit/Google Fit, DoorDash/Uber Direct expertise</li>
+                  <li>Data platforms, observability, and performance first</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium">AI & RAG Done Right</h4>
+                <ul className="list-disc ml-5 space-y-1 mt-1">
+                  <li>Retrieval‑augmented chat with guardrails & analytics</li>
+                  <li>Searchable knowledge bases, embeddings, and evals</li>
+                  <li>Human‑in‑the‑loop workflows where it matters</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium">Delivery Discipline</h4>
+                <ul className="list-disc ml-5 space-y-1 mt-1">
+                  <li>Milestone‑based execution with 2‑week demos</li>
+                  <li>Security by design (privacy, consent, encryption)</li>
+                  <li>App Store & Play compliance experience</li>
+                </ul>
+              </div>
+            </div>
+            <div className="mt-4 text-xs text-slate-500">We have delivered complex technology projects for startups and multiple MNCs across retail, logistics, and fintech.</div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Two99 Signature */}
+      <section className="mx-auto max-w-6xl px-6 pb-8">
+        <Card className="rounded-2xl">
+          <CardHeader>
+            <CardTitle className="text-xl">Proposal by Two99</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-slate-700">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div>
+                <div className="text-base font-medium">Two99 · Product Engineering & AI</div>
+                <div className="text-slate-500 text-xs">hello@two99.org</div>
+              </div>
+              <div className="text-xs text-slate-500">© {new Date().getFullYear()} Two99. All rights reserved.</div>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
       <footer className="border-t">
         <div className="mx-auto max-w-6xl px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-600">
           <div className="flex items-center gap-2"><Globe className="h-4 w-4"/> Built to industry standards · Privacy by design</div>
-          <div className="flex items-center gap-2"><Smartphone className="h-4 w-4"/> iOS · Android · Web</div>
+          
         </div>
       </footer>
     </div>
