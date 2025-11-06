@@ -11,3 +11,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+

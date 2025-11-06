@@ -1,11 +1,37 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { CheckCircle, Clock, Rocket, Layers, Workflow, Shield, Brain, MessageSquare, Smartphone, Download, Mail, Target, Users, Globe } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Toast } from "@/components/ui/toast";
 
 export default function ProposalPage() {
   const printRef = useRef(null);
+  const [showToast, setShowToast] = useState(false);
+
+  const handleShare = async () => {
+    const link = "https://miramasa.vercel.app/";
+    try {
+      await navigator.clipboard.writeText(link);
+      setShowToast(true);
+    } catch (err) {
+      // Fallback for older browsers
+      const textArea = document.createElement("textarea");
+      textArea.value = link;
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        setShowToast(true);
+      } catch (err) {
+        console.error('Failed to copy link', err);
+      }
+      document.body.removeChild(textArea);
+    }
+  };
+
   const handlePrint = () => {
     try {
       const content = printRef.current ? printRef.current.innerHTML : '';
@@ -93,7 +119,7 @@ export default function ProposalPage() {
           </div>
           <div className="flex flex-col gap-3 shrink-0 print:hidden">
             <Button onClick={handlePrint} className="rounded-2xl h-11 px-5">Download PDF <Download className="ml-2 h-4 w-4"/></Button>
-            <Button variant="secondary" className="rounded-2xl h-11 px-5">Share <Mail className="ml-2 h-4 w-4"/></Button>
+            <Button onClick={handleShare} variant="secondary" className="rounded-2xl h-11 px-5">Share <Mail className="ml-2 h-4 w-4"/></Button>
           </div>
         </div>
       </header>
@@ -521,6 +547,14 @@ export default function ProposalPage() {
           <div className="flex items-center gap-2"><Smartphone className="h-4 w-4"/> iOS · Android · Web</div>
         </div>
       </footer>
+      
+      {showToast && (
+        <Toast 
+          message="Link copied!" 
+          onClose={() => setShowToast(false)} 
+          duration={3000}
+        />
+      )}
     </div>
   );
 }
