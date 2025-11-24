@@ -21,13 +21,13 @@ export default function ProposalPage() {
     }
   };
   const phases = [
-    { phase: "Discovery + IA + Wireframes + Approvals", duration: "3 weeks", details: ["Stakeholder workshops", "User flows & information architecture", "Low–medium fidelity wireframes", "Design approvals & sign-off"] },
-    { phase: "Planning & Technical Architecture", duration: "2 weeks", details: ["Service boundaries & API contracts", "Data models & security policies", "CI/CD, environments & observability plan"] },
-    { phase: "MVP Core Build (Ordering · Menu · Delivery)", duration: "5 weeks", details: ["Toast API wrapper", "Cart/checkout with Apple Pay & Google Pay", "DoorDash Drive & Uber Direct orchestration", "Rotational menu & macros"] },
-    { phase: "Loyalty & Subscriptions", duration: "2 weeks", details: ["Points accrual/redeem", "Tiers & benefits", "Weekly subscription bundles"] },
-    { phase: "Prescriptive Dish Engine", duration: "2 weeks", details: ["HealthKit & Google Fit sync", "Rules/ML-ready engine", "Explainability: 'Why this dish?'"] },
-    { phase: "RAG Chat Support (Web · App · WhatsApp)", duration: "2 weeks", details: ["Vector DB & embeddings", "Knowledge base ingestion", "Omnichannel adapters & guardrails"] },
-    { phase: "QA · Security · UAT · Store Approvals", duration: "2 weeks", details: ["Performance targets", "Pen-test remediation", "App Store & Play approvals"] },
+    { phase: "Discovery + IA + Wireframes + Approvals", details: ["Stakeholder workshops", "User flows & information architecture", "Low–medium fidelity wireframes", "Design approvals & sign-off"] },
+    { phase: "Planning & Technical Architecture", details: ["Service boundaries & API contracts", "Data models & security policies", "CI/CD, environments & observability plan"] },
+    { phase: "MVP Core Build (Ordering · Menu · Delivery)", details: ["Toast API wrapper", "Cart/checkout with Apple Pay & Google Pay", "DoorDash Drive & Uber Direct orchestration", "Rotational menu & macros"] },
+    { phase: "Loyalty & Subscriptions", details: ["Points accrual/redeem", "Tiers & benefits", "Weekly subscription bundles"] },
+    { phase: "Prescriptive Dish Engine", details: ["HealthKit & Google Fit sync", "Rules/ML-ready engine", "Explainability: 'Why this dish?'"] },
+    { phase: "RAG Chat Support (Web · App · WhatsApp)", details: ["Vector DB & embeddings", "Knowledge base ingestion", "Omnichannel adapters & guardrails"] },
+    { phase: "QA · Security · UAT · Store Approvals", details: ["Performance targets", "Pen-test remediation", "App Store & Play approvals"] },
   ];
 
   const modules = [
@@ -366,8 +366,8 @@ export default function ProposalPage() {
 
       {/* Timeline */}
       <section className="mx-auto max-w-6xl px-6 py-6">
-        <h2 className="text-2xl md:text-3xl font-semibold">Delivery Timeline</h2>
-        <p className="mt-2 text-slate-600">Full build: <span className="font-medium">~14 weeks</span> · MVP path: <span className="font-medium">~10 weeks</span> to launch + <span className="font-medium">~5 weeks</span> for the remaining features.</p>
+        <h2 className="text-2xl md:text-3xl font-semibold">Delivery Milestones</h2>
+        {/* <p className="mt-2 text-slate-600">Full build: <span className="font-medium">~14 weeks</span> · MVP path: <span className="font-medium">~10 weeks</span> to launch + <span className="font-medium">~5 weeks</span> for the remaining features.</p> */}
         <div className="mt-6 grid md:grid-cols-2 gap-5">
           {phases.map((p, idx) => (
             <Card key={idx} className="rounded-2xl">
@@ -461,32 +461,35 @@ export default function ProposalPage() {
               <div>
                 <h4 className="font-medium">Commercial Options</h4>
                 <ul className="list-disc ml-5 space-y-1 mt-1">
-                  <li>MVP (10 weeks) — Fixed bid / Milestone based</li>
-                  <li>Full Build (14 weeks) — Fixed bid / Milestone based</li>
+                  <li>Full Build (4–9 week options) — Fixed bid / Milestone based</li>
                   <li>Retainer for enhancements & growth experiments</li>
                 </ul>
               </div>
             </div>
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-  <Card className="rounded-2xl border border-slate-200">
-    <CardHeader className="pb-2">
-      <CardTitle className="text-base font-semibold">MVP Build</CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-slate-700 space-y-1">
-      <div className="text-2xl font-bold">USD 35,000</div>
-      <div className="text-xs text-slate-500">10 weeks</div>
-    </CardContent>
-  </Card>
-  <Card className="rounded-2xl border border-slate-200">
-    <CardHeader className="pb-2">
-      <CardTitle className="text-base font-semibold">Full Build</CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-slate-700 space-y-1">
-      <div className="text-2xl font-bold">USD 42,000</div>
-      <div className="text-xs text-slate-500">14 weeks</div>
-    </CardContent>
-  </Card>
-</div>
+              <Card className="rounded-2xl border border-slate-200">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base font-semibold">Full Build · Cost 1</CardTitle>
+                </CardHeader>
+                <CardContent className="text-sm text-slate-700 space-y-2">
+                  <ul className="list-disc ml-5 space-y-1">
+                    <li>Timelines: 4–6 weeks (website + app) · launch order decided by team</li>
+                    <li>Cost: USD 34,440 (18% less than current proposal)</li>
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card className="rounded-2xl border border-slate-200">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base font-semibold">Full Build · Cost 2</CardTitle>
+                </CardHeader>
+                <CardContent className="text-sm text-slate-700 space-y-2">
+                  <ul className="list-disc ml-5 space-y-1">
+                    <li>Timelines: 8–9 weeks (website + app) · launch order decided by team</li>
+                    <li>Cost: USD 30,660 (27% less than current proposal)</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
 <div className="border-t pt-3 mt-4 text-xs text-slate-500 italic">Implementation is delivered milestone-by-milestone with transparent demos, so you always see working product every 2 weeks.</div>
           </CardContent>
         </Card>
