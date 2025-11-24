@@ -63,6 +63,111 @@ export default function ProposalPage() {
     "Support deflection ≥ 50% via RAG chat after month 1",
   ];
 
+  const squareFlow = [
+    {
+      step: "Step 1: User Signup and Login",
+      api: "Square API Support: Not supported",
+      squareSupport: "Square does not provide customer-facing authentication or account management APIs.",
+      implementation: "Build a secure custom authentication service (email/phone + optional MFA) and link authenticated users to Square customer profiles.",
+      details: [
+        "Persist internal user identity in our database.",
+        "After login, look up or create the associated Square Customer to unlock loyalty tracking and order history.",
+      ],
+    },
+    {
+      step: "Step 2: Display Available Restaurant Outlets",
+      api: "Square API: Locations API · Endpoint: GET /locations",
+      squareSupport: "Returns all merchant outlets with address, hours, contact info, capabilities, and the required location_id.",
+      implementation: "Call the Locations API during onboarding or cache refresh, surface outlets in the UI, and propagate location_id to downstream calls.",
+      details: [
+        "Every order, catalog query, and fulfillment references the chosen location_id.",
+        "Location data powers maps, store availability, and pickup eligibility.",
+      ],
+    },
+    {
+      step: "Step 3: Display Menu Items for Selected Outlet",
+      api: "Square API: Catalog API · POST /catalog/search, GET /catalog/object/{object_id}",
+      squareSupport: "Catalog stores items, categories, variations, modifier lists, and media assets.",
+      implementation: "Search catalog items scoped to the location, hydrate each item with variations, images, and modifier lists for menu rendering.",
+      details: [
+        "Supports CAVA-style groupings (Bowls, Pitas, Drinks, etc.).",
+        "Use item variations for size/price combos and attach images for merchandising.",
+      ],
+    },
+    {
+      step: "Step 4: Display and Handle Item Customization",
+      api: "Square API: Catalog API with include_related_objects",
+      squareSupport: "Modifier lists define toppings, proteins, and add-ons with validation rules.",
+      implementation: "Fetch related modifier objects per item to show selectable options and enforce min/max logic.",
+      details: [
+        "Support both list-based (radio/checkbox) and free-text instructions.",
+        "Respect selection_type, min_selected_modifiers, max_selected_modifiers, and ordinal for UX parity with Square POS.",
+      ],
+    },
+    {
+      step: "Step 5: Order Creation and Submission",
+      api: "Square API: Orders API · Endpoint: POST /orders",
+      squareSupport: "Orders API captures line items, modifiers, fulfillment, taxes, discounts, and service charges synced with Square POS.",
+      implementation: "Compose a full order payload from the cart, apply discounts/taxes, and submit for downstream fulfillment.",
+      details: [
+        "Use fulfillments for pickup vs delivery.",
+        "Embed loyalty, service_charges, and custom metadata as needed.",
+      ],
+    },
+    {
+      step: "Step 6: Payment Processing",
+      api: "Square API: Payments API · Endpoint: POST /payments",
+      squareSupport: "Square Web or In-App Payments SDK tokenizes card data into a secure nonce for server-side capture.",
+      implementation: "Use SDK on the frontend to collect payment, send nonce + order info to backend, and call Payments API to finalize.",
+      details: [
+        "Square handles PCI compliance; our servers never store raw card data.",
+        "Update order status once payment succeeds or fails.",
+      ],
+    },
+    {
+      step: "Step 7: Customer Profile Management",
+      api: "Square API: Customers API · POST/GET/PUT/search",
+      squareSupport: "Creates and maintains customer profiles for loyalty, marketing, and order linkage.",
+      implementation: "After custom authentication, create/update the Square customer and persist customer.id alongside the internal user.",
+      details: [
+        "Use referenceId to map internal_user_id.",
+        "Enables unified purchase history across channels.",
+      ],
+    },
+    {
+      step: "Step 8: Loyalty Program Integration",
+      api: "Square API: Loyalty API",
+      squareSupport: "Handles points accrual, redemption, and reward issuance when the merchant subscribes to Square Loyalty.",
+      implementation: "Integrate earn/redeem flows post-payment, display balances, and honor merchant-defined reward rules.",
+      details: [
+        "Requires Square Loyalty subscription and dashboard configuration.",
+        "Sync loyalty events with in-app messaging and receipts.",
+      ],
+    },
+    {
+      step: "Step 9: Real-Time Order Updates",
+      api: "Square API: Webhooks (orders.*, payments.*, inventory.*)",
+      squareSupport: "Push notifications for new orders, status changes, payment results, and inventory adjustments.",
+      implementation: "Register HTTPS webhook endpoints, verify signatures, and broadcast updates to clients (push, SMS, email).",
+      details: [
+        "Key events: order.created, order.updated, payment.created, payment.updated, inventory.count.updated.",
+        "Keeps customers informed without constant polling.",
+      ],
+    },
+    {
+      step: "Step 10: Health-Based Recommendations",
+      api: "Square API Support: Not supported",
+      squareSupport: "Square has no health platform integrations or nutrition intelligence APIs.",
+      implementation: "Build a bespoke recommendation engine that ingests Apple HealthKit/Google Fit data, applies Miramasa rules, and maps back to Square catalog items.",
+      details: [
+        "Handle permissions, data sync, and explainable recommendation logic.",
+        "Filter catalog items based on allergens, macros, and wellness goals.",
+      ],
+    },
+  ];
+
+  
+
   return (
     <div ref={printRef} className="min-h-screen bg-white text-slate-900">
       <style>{`
@@ -323,6 +428,46 @@ export default function ProposalPage() {
             </Card>
           ))}
         </div>
+      </section>
+
+      {/* Square-Based Scope */}
+      <section className="mx-auto max-w-6xl px-6 py-6">
+        <h2 className="text-2xl md:text-3xl font-semibold">Square-Based Implementation Scope</h2>
+        <p className="mt-2 text-slate-600 max-w-3xl">
+          We combine out-of-the-box Square capabilities with Miramasa’s bespoke programming to deliver an end-to-end ordering, payments, and loyalty experience.
+          Native endpoints handle locations, catalog, orders, payments, customers, loyalty, and webhooks; everything else—authentication, health data, personalization—remains custom-built.
+        </p>
+
+        <div className="mt-6 space-y-5">
+          {squareFlow.map((step, idx) => (
+            <Card key={idx} className="rounded-2xl">
+              <CardHeader>
+                <CardTitle className="text-lg">{step.step}</CardTitle>
+                <p className="text-sm text-slate-500">{step.api}</p>
+              </CardHeader>
+              <CardContent className="text-sm text-slate-700 space-y-3">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Square API Support</p>
+                    <p className="mt-1">{step.squareSupport}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Implementation Required</p>
+                    <p className="mt-1">{step.implementation}</p>
+                  </div>
+                </div>
+                {step.details && (
+                  <ul className="list-disc ml-5 space-y-1">
+                    {step.details.map((detail, detailIdx) => (
+                      <li key={detailIdx}>{detail}</li>
+                    ))}
+                  </ul>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
       </section>
 
       {/* RAG Section */}
